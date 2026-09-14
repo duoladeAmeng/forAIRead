@@ -1,0 +1,5 @@
+feature_group,interaction_effect_size,interaction_test_statistic,empirical_p,battery_consistency,batteries,permutations,null_hypothesis
+Group_CC,0.23003217298829448,0.23003217298829448,0.5984015984015985,0.05196658336600957,4,1000,no cross-battery-aligned state-by-horizon interaction pattern
+Group_CV,0.37785964148931656,0.37785964148931656,0.04695304695304695,0.12780571473239757,4,1000,no cross-battery-aligned state-by-horizon interaction pattern
+Group_DischargeIC,0.43929001139086005,0.43929001139086005,0.005994005994005994,0.23054025523224872,4,1000,no cross-battery-aligned state-by-horizon interaction pattern
+Group_EnergyEfficiency,0.26570755725342105,0.26570755725342105,0.37162837162837165,0.048220279557822925,4,1000,no cross-battery-aligned state-by-horizon interaction pattern

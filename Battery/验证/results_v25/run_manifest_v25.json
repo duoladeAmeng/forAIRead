@@ -1,0 +1,33 @@
+{
+  "questions": [
+    "HF-history versus current HF",
+    "State x Horizon feature utility"
+  ],
+  "batteries": [
+    "CS2_35",
+    "CS2_36",
+    "CS2_37",
+    "CS2_38"
+  ],
+  "horizons": [
+    1,
+    4,
+    8,
+    12,
+    16,
+    24,
+    32,
+    48,
+    64
+  ],
+  "history_length": 32,
+  "alpha": 1.0,
+  "state_definitions": [
+    "causal fixed SOH level",
+    "causal expanding degradation dynamics tertiles",
+    "causal fixed-reference cycle position"
+  ],
+  "permutations": 1000,
+  "min_reliable_state_n": 30,
+  "v1_v2_preserved": true
+}

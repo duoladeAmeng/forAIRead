@@ -20,6 +20,16 @@
 
 v2 只读取 `processed/`，结果写入 `results_v2/`、`figures_v2/` 和 `cache_v2/`，不会覆盖 v1。科研结论见 `VALIDATION_V2_SUMMARY.md`。
 
+## Validation v2.5
+
+HF-history 价值审计与 causal degradation-state × horizon feature-group utility：
+
+```powershell
+& 'E:\CodeDir\Battery\.venv\Scripts\python.exe' run_analysis_v25.py
+```
+
+输出写入 `results_v25/`、`figures_v25/` 和 `cache_v25/`。结论见 `VALIDATION_V25_SUMMARY.md`。
+
 ## 固定方法
 
 - SOH 主定义：cycle 放电容量 / 1.1 Ah 额定容量；同时保存以首个有效实测容量归一化的 `SOH_initial` 供敏感性分析。

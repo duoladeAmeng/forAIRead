@@ -1,0 +1,9 @@
+state_variable,min_source_time_offset,max_source_time_offset,causal
+current_soh,0,0,True
+soh_slope,-31,0,True
+mean_degradation_rate,-31,0,True
+recent_degradation_rate,-7,0,True
+volatility,-31,0,True
+soh_level_fixed_bins,0,0,True
+dynamics_expanding_tertiles,-999,0,True
+cycle_position_fixed_1000_reference,0,0,True
