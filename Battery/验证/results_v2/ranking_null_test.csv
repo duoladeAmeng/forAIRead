@@ -1,0 +1,4 @@
+metric,observed,null_mean,null_std,empirical_p,permutations,null_hypothesis
+crossover_count,826.0,545.047,30.05038796449751,0.000999000999000999,1000,no shared horizon-specific feature-rank alignment
+replicated_ge3_crossover_count,56.0,12.284,4.5550073646583815,0.000999000999000999,1000,no shared horizon-specific feature-rank alignment
+mean_spearman_distance_vs_kendall_tau,0.1446496521496242,0.00014881639294380512,0.11200001418319984,0.9140859140859141,1000,no shared horizon-specific feature-rank alignment

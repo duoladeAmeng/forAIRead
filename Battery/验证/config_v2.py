@@ -1,0 +1,31 @@
+from pathlib import Path
+import config as v1
+
+PROJECT_ROOT = Path(__file__).resolve().parent
+PROCESSED_DIR = v1.PROCESSED_DIR
+RESULTS_DIR = PROJECT_ROOT / "results_v2"
+FIGURES_DIR = PROJECT_ROOT / "figures_v2"
+CACHE_DIR = PROJECT_ROOT / "cache_v2"
+
+BATTERIES = v1.BATTERIES
+HORIZONS = v1.MAIN_HORIZONS + v1.EXTENDED_HORIZONS
+H_MAX = max(HORIZONS)
+FEATURES = v1.FEATURES
+HFS = v1.HFS
+HISTORY_LENGTHS = [8, 16, 32]
+MAIN_HISTORY_LENGTH = 32
+RIDGE_ALPHAS = v1.RIDGE_ALPHAS
+PRIMARY_ALPHA = 1.0
+BLOCK_LENGTHS = [10, 20, 30]
+BOOTSTRAP_N = 1000
+NULL_N = 1000
+MIN_INTERPRETABLE_N = 30
+RANDOM_SEED = 42
+
+FEATURE_GROUPS = {
+    "Group_CC": ["HF1", "HF7"],
+    "Group_CV": ["HF2", "HF8"],
+    "Group_EnergyEfficiency": ["HF3"],
+    "Group_DischargeIC": ["HF4", "HF5", "HF6"],
+}
+

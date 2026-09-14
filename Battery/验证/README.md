@@ -10,6 +10,16 @@
 
 环境由父项目的 `uv` 管理；重复分析时可用 `--skip-extraction` 复用已提取 CSV。所有参数集中在 `config.py`。
 
+## Validation v2
+
+严格支持集、SOH-history/trend、固定 alpha 敏感性、grouped LOFO、HF4–HF6 缺失机制、分段非循环 Bootstrap 和 ranking null test：
+
+```powershell
+& 'E:\CodeDir\Battery\.venv\Scripts\python.exe' run_analysis_v2.py
+```
+
+v2 只读取 `processed/`，结果写入 `results_v2/`、`figures_v2/` 和 `cache_v2/`，不会覆盖 v1。科研结论见 `VALIDATION_V2_SUMMARY.md`。
+
 ## 固定方法
 
 - SOH 主定义：cycle 放电容量 / 1.1 Ah 额定容量；同时保存以首个有效实测容量归一化的 `SOH_initial` 供敏感性分析。

@@ -1,0 +1,47 @@
+{
+  "batteries": [
+    "CS2_35",
+    "CS2_36",
+    "CS2_37",
+    "CS2_38"
+  ],
+  "horizons": [
+    1,
+    4,
+    8,
+    12,
+    16,
+    24,
+    32,
+    48,
+    64
+  ],
+  "support_rules": [
+    "pairwise",
+    "horizon_common",
+    "feature_common",
+    "double_common"
+  ],
+  "history_lengths": [
+    8,
+    16,
+    32
+  ],
+  "primary_alpha": 1.0,
+  "alpha_sensitivity": [
+    0.01,
+    0.1,
+    1.0,
+    10.0,
+    100.0
+  ],
+  "bootstrap_n": 1000,
+  "block_lengths": [
+    10,
+    20,
+    30
+  ],
+  "null_permutations": 1000,
+  "v1_results_preserved": true,
+  "processed_csv_modified": false
+}
