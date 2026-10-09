@@ -35,15 +35,7 @@ public class SaTokenConfigure {
                     SaRouter.match("/**") // 拦截所有路由
                             .notMatch("/auth/login") // 排除登录接口
                             .notMatch("/auth/verification/code/send") // 排除验证码发送接口
-                            .notMatch("/note/channel/list") // 排除获取频道接口
-                            .notMatch("/note/discover/note/list") // 发现页-查询笔记列表
-                            .notMatch("/note/profile/note/list") // 个人主页-查询笔记列表
-                            .notMatch("/note/note/detail") // 查询笔记详情
-                            .notMatch("/note/note/isLikedAndCollectedData")
-                            .notMatch("/comment/comment/list") // 查询评论分页数据
-                            .notMatch("/comment/comment/child/list") // 查询评论分页数据
-                            .notMatch("/user/user/profile") // 查询评论分页数据
-                            .notMatch("/search/search/note") // 笔记搜索
+                            .notMatch("/user/user/profile") // 排除用户主页查看
                             .check(r -> StpUtil.checkLogin()) // 校验是否登录
                     ;
 

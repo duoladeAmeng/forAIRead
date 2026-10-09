@@ -23,11 +23,6 @@
 
         <dependency>
             <groupId>com.quanxiaoha</groupId>
-            <artifactId>xiaohashu-count-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.quanxiaoha</groupId>
             <artifactId>xiaohashu-distributed-id-generator-api</artifactId>
         </dependency>
 
@@ -39,6 +34,11 @@
         <dependency>
             <groupId>com.quanxiaoha</groupId>
             <artifactId>xiaohashu-user-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.quanxiaoha</groupId>
+            <artifactId>xiaohashu-count-api</artifactId>
         </dependency>
 
         <!-- 业务接口日志组件 -->
@@ -126,6 +126,12 @@
             <groupId>org.apache.rocketmq</groupId>
             <artifactId>rocketmq-client</artifactId>
             <version>4.9.4</version>
+        </dependency>
+
+        <!-- Mapstruct 属性映射 -->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
         </dependency>
     </dependencies>
 

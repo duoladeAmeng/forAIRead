@@ -53,12 +53,6 @@ public interface NoteCollectionDOMapper {
      */
     List<NoteCollectionDO> selectCollectedByUserIdAndLimit(@Param("userId") Long userId, @Param("limit")  int limit);
 
-    int selectTotalCountByUserId(@Param("userId") Long userId);
-
-    List<Long> selectPageListByUserId(@Param("userId") Long userId,
-                                      @Param("offset") long offset,
-                                      @Param("pageSize") long pageSize);
-
     int updateByPrimaryKeySelective(NoteCollectionDO record);
 
     int updateByPrimaryKey(NoteCollectionDO record);

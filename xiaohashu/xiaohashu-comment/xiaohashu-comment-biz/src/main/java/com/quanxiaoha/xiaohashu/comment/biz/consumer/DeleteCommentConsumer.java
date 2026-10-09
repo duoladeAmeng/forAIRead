@@ -128,10 +128,10 @@ public class DeleteCommentConsumer implements RocketMQListener<String>  {
 
         // 查询一级评论
         CommentDO oneLevelCommentDO = commentDOMapper.selectByPrimaryKey(parentCommentId);
-        Long firstReplyCommentId = oneLevelCommentDO.getFirstReplyCommentId();
+        Long replyCommentId = oneLevelCommentDO.getReplyCommentId();
 
         // 若删除的是最早回复的二级评论
-        if (Objects.equals(firstReplyCommentId, commentId)) {
+        if (Objects.equals(replyCommentId, commentId)) {
             // 查询数据库，重新获取一级评论最早回复的评论
             CommentDO earliestCommentDO = commentDOMapper.selectEarliestByParentId(parentCommentId);
 

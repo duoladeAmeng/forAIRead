@@ -3,14 +3,12 @@ package com.quanxiaoha.xiaohashu.note.biz.rpc;
 import cn.hutool.core.collection.CollUtil;
 import com.quanxiaoha.framework.common.response.Response;
 import com.quanxiaoha.xiaohashu.count.api.CountFeignApi;
-import com.quanxiaoha.xiaohashu.count.dto.FindNoteCountByIdReqDTO;
-import com.quanxiaoha.xiaohashu.count.dto.FindNoteCountByIdRspDTO;
-import com.quanxiaoha.xiaohashu.user.dto.req.FindUserByIdReqDTO;
-import com.quanxiaoha.xiaohashu.user.dto.req.FindUsersByIdsReqDTO;
-import com.quanxiaoha.xiaohashu.user.dto.resp.FindUserByIdRspDTO;
+import com.quanxiaoha.xiaohashu.count.dto.FindNoteCountsByIdRspDTO;
+import com.quanxiaoha.xiaohashu.count.dto.FindNoteCountsByIdsReqDTO;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -26,17 +24,18 @@ public class CountRpcService {
     private CountFeignApi countFeignApi;
 
     /**
-     * 查询笔记计数信息
-     * @param noteId
+     * 批量查询笔记计数
+     *
+     * @param noteIds
      * @return
      */
-    public FindNoteCountByIdRspDTO findNoteCountById(Long noteId) {
-        FindNoteCountByIdReqDTO findNoteCountByIdReqDTO = new FindNoteCountByIdReqDTO();
-        findNoteCountByIdReqDTO.setNoteId(noteId);
+    public List<FindNoteCountsByIdRspDTO> findByNoteIds(List<Long> noteIds) {
+        FindNoteCountsByIdsReqDTO findNoteCountsByIdsReqDTO = new FindNoteCountsByIdsReqDTO();
+        findNoteCountsByIdsReqDTO.setNoteIds(noteIds);
 
-        Response<FindNoteCountByIdRspDTO> response = countFeignApi.findNoteCount(findNoteCountByIdReqDTO);
+        Response<List<FindNoteCountsByIdRspDTO>> response = countFeignApi.findNotesCount(findNoteCountsByIdsReqDTO);
 
-        if (Objects.isNull(response) || !response.isSuccess()) {
+        if (!response.isSuccess() || Objects.isNull(response.getData()) || CollUtil.isEmpty(response.getData())) {
             return null;
         }
 

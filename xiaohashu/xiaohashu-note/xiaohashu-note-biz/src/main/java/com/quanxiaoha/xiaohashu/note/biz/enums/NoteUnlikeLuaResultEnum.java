@@ -14,7 +14,7 @@ import java.util.Objects;
 @Getter
 @AllArgsConstructor
 public enum NoteUnlikeLuaResultEnum {
-    // 布隆过滤器不存在
+    // 布隆过滤器不存在 或者 Roaring Bitmap 不存在
     NOT_EXIST(-1L),
     // 笔记已点赞
     NOTE_LIKED(1L),

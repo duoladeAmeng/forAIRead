@@ -2,7 +2,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver # 指定数据库驱动类
     # 数据库连接信息
-    url: jdbc:mysql://192.168.0.106:3306/xiaohashu-prod?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://127.0.0.1:3306/xiaohashu?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai
     username: root # 数据库用户名
     password: A2qT03X7KlL4v/F2foD6kV/Ch9gpNBWOh1qoCywanjv1AsI7f9x3iAyR9NkUKeV+FMo+halCTzy5Llbk2VOrVQ== # 数据库密码
     type: com.alibaba.druid.pool.DruidDataSource
@@ -44,13 +44,13 @@ logging:
     com.quanxiaoha.xiaohashu.search.biz.domain.mapper: debug
 
 elasticsearch:
-  address: 192.168.0.106:9200 # Elasticsearch 地址
+  address: 127.0.0.1:9200 # Elasticsearch 地址
   hotUpdateExtDict: E:\docker\elasticsearch\config\analysis-ik\custom\mydict_hot_update.dic
 
 canal: # Canal 配置
-  address: 192.168.0.106:11111 # 链接地址
+  address: 127.0.0.1:11111 # 链接地址
   destination: example # 数据目标
   username: canal # 数据库用户名
   password: canal # 数据库密码
-  subscribe: xiaohashu-prod.t_note,xiaohashu-prod.t_user # 订阅规则，只订阅笔记表和用户表
+  subscribe: xiaohashu.t_note,xiaohashu.t_user # 订阅规则，只订阅笔记表和用户表
   batchSize: 1000 # 一批次拉取数据量

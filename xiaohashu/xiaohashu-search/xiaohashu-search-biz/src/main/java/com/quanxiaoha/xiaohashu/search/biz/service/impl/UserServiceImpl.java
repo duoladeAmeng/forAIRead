@@ -142,7 +142,6 @@ public class UserServiceImpl implements UserService {
                         .noteTotal(noteTotal)
                         .fansTotal(NumberUtils.formatNumberString(fansTotal))
                         .highlightNickname(highlightedNickname)
-                        .isLiked(Boolean.FALSE)
                         .build();
                 searchUserRspVOS.add(searchUserRspVO);
             }

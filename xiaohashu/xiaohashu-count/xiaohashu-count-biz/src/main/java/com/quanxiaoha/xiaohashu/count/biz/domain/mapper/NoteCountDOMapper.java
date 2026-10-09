@@ -3,6 +3,8 @@ package com.quanxiaoha.xiaohashu.count.biz.domain.mapper;
 import com.quanxiaoha.xiaohashu.count.biz.domain.dataobject.NoteCountDO;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface NoteCountDOMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -36,10 +38,14 @@ public interface NoteCountDOMapper {
 
     NoteCountDO selectByPrimaryKey(Long id);
 
-    NoteCountDO selectByNoteId(Long noteId);
+    /**
+     * 根据笔记 ID 批量查询
+     * @param noteIds
+     * @return
+     */
+    List<NoteCountDO> selectByNoteIds(@Param("noteIds") List<Long> noteIds);
 
     int updateByPrimaryKeySelective(NoteCountDO record);
 
     int updateByPrimaryKey(NoteCountDO record);
-
 }

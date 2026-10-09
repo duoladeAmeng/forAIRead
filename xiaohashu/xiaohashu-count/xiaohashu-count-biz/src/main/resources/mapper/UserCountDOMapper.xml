@@ -20,11 +20,12 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
 
+
   <select id="selectByUserId" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from t_user_count
-    where user_id = #{userId} limit 1
+    where user_id = #{userId}
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

@@ -7,6 +7,7 @@ package com.quanxiaoha.xiaohashu.user.constant;
  * @description: TODO
  **/
 public interface ApiConstants {
+
     /**
      * 服务名称
      */

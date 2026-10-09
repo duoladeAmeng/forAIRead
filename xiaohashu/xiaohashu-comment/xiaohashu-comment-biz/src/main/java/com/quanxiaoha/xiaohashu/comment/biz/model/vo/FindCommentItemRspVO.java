@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 /**
  * @author: 犬小哈
  * @date: 2024/4/7 15:17
@@ -67,12 +65,7 @@ public class FindCommentItemRspVO {
     /**
      * 最早回复的评论
      */
-    // private FindCommentItemRspVO firstReplyComment;
-
-    /**
-     * 子评论（最早回复的评论）
-     */
-    private List<FindCommentItemRspVO> childComments;
+    private FindCommentItemRspVO firstReplyComment;
 
     /**
      * 热度值

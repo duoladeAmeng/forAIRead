@@ -72,4 +72,5 @@ public interface UserService {
      * @return
      */
     Response<FindUserProfileRspVO> findUserProfile(FindUserProfileReqVO findUserProfileReqVO);
+
 }

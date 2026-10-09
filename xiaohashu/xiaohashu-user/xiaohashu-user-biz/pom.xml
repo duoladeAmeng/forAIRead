@@ -23,17 +23,17 @@
 
         <dependency>
             <groupId>com.quanxiaoha</groupId>
-            <artifactId>xiaohashu-count-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.quanxiaoha</groupId>
             <artifactId>xiaohashu-oss-api</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.quanxiaoha</groupId>
             <artifactId>xiaohashu-user-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.quanxiaoha</groupId>
+            <artifactId>xiaohashu-count-api</artifactId>
         </dependency>
 
         <dependency>
@@ -115,7 +115,36 @@
         <dependency>
             <groupId>com.github.ben-manes.caffeine</groupId>
             <artifactId>caffeine</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>checker-qual</artifactId>
+                    <groupId>org.checkerframework</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>error_prone_annotations</artifactId>
+                    <groupId>com.google.errorprone</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
+
+        <!-- Rocket MQ -->
+        <dependency>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-spring-boot-starter</artifactId>
+        </dependency>
+
+        <!-- Sentinel 流量治理 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+        </dependency>
+
+        <!-- 以 Nacos 作为 Sentinel 的数据源 -->
+        <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-datasource-nacos</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

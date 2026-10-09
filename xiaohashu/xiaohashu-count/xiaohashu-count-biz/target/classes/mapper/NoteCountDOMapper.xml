@@ -17,12 +17,6 @@
     from t_note_count
     where id = #{id,jdbcType=BIGINT}
   </select>
-
-  <select id="selectByNoteId" resultMap="BaseResultMap">
-    select note_id, like_total, collect_total, comment_total
-    from t_note_count where note_id = #{noteId}
-  </select>
-
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_note_count
     where id = #{id,jdbcType=BIGINT}
@@ -89,6 +83,16 @@
       </if>
     </trim>
   </insert>
+
+  <select id="selectByNoteIds" resultMap="BaseResultMap">
+    select note_id, like_total, collect_total, comment_total
+    from t_note_count
+    where note_id in
+    <foreach collection="noteIds" item="noteId" open="(" separator="," close=")">
+      #{noteId}
+    </foreach>
+  </select>
+
   <update id="updateByPrimaryKeySelective" parameterType="com.quanxiaoha.xiaohashu.count.biz.domain.dataobject.NoteCountDO">
     update t_note_count
     <set>

@@ -5,6 +5,7 @@ import com.quanxiaoha.framework.common.response.Response;
 import com.quanxiaoha.xiaohashu.user.biz.enums.ResponseCodeEnum;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -38,14 +39,25 @@ public class GlobalExceptionHandler {
      * 捕获参数校验异常
      * @return
      */
-    @ExceptionHandler({ MethodArgumentNotValidException.class })
+    @ExceptionHandler({
+            MethodArgumentNotValidException.class,
+            BindException.class
+    })
     @ResponseBody
-    public Response<Object> handleMethodArgumentNotValidException(HttpServletRequest request, MethodArgumentNotValidException e) {
+    public Response<Object> handleControllerException(HttpServletRequest request, Throwable e) {
         // 参数错误异常码
         String errorCode = ResponseCodeEnum.PARAM_NOT_VALID.getErrorCode();
 
-        // 获取 BindingResult
-        BindingResult bindingResult = e.getBindingResult();
+        // 声明一个 BindingResult 变量，用于存储参数校验的错误结果
+        BindingResult bindingResult = null;
+
+        // 检查异常类型，并强制类型转换，获取绑定结果
+        if (e instanceof MethodArgumentNotValidException) {
+            bindingResult = (((MethodArgumentNotValidException) e)).getBindingResult();
+        } else if (e instanceof BindException) {
+            bindingResult = ((BindException) e).getBindingResult();
+        }
+
 
         StringBuilder sb = new StringBuilder();
 

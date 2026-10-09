@@ -61,7 +61,7 @@ public class MinioFileStrategy implements FileStrategy  {
                 .build());
 
         // 返回文件的访问链接
-        String url = String.format("%s/%s/%s", minioProperties.getDomain(), bucketName, objectName);
+        String url = String.format("%s/%s/%s", minioProperties.getEndpoint(), bucketName, objectName);
         log.info("==> 上传文件至 Minio 成功，访问路径: {}", url);
         return url;
     }

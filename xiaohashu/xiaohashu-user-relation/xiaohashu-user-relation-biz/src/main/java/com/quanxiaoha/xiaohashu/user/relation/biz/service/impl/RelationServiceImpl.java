@@ -164,6 +164,7 @@ public class RelationServiceImpl implements RelationService {
 
         log.info("==> 开始发送关注操作 MQ, 消息体: {}", followUserMqDTO);
 
+        // 分区键
         String hashKey = String.valueOf(userId);
 
         // 异步发送 MQ 消息，提升接口响应速度
@@ -355,6 +356,8 @@ public class RelationServiceImpl implements RelationService {
 
             // 分页查询
             List<FollowingDO> followingDOS = followingDOMapper.selectPageListByUserId(userId, offset, limit);
+            // 赋值真实的记录总数
+            total = count;
 
             // 若记录不为空
             if (CollUtil.isNotEmpty(followingDOS)) {

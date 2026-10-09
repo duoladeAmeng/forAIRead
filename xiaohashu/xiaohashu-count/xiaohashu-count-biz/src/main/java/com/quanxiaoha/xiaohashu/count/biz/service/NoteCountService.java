@@ -1,8 +1,10 @@
 package com.quanxiaoha.xiaohashu.count.biz.service;
 
 import com.quanxiaoha.framework.common.response.Response;
-import com.quanxiaoha.xiaohashu.count.dto.FindNoteCountByIdReqDTO;
-import com.quanxiaoha.xiaohashu.count.dto.FindNoteCountByIdRspDTO;
+import com.quanxiaoha.xiaohashu.count.dto.FindNoteCountsByIdRspDTO;
+import com.quanxiaoha.xiaohashu.count.dto.FindNoteCountsByIdsReqDTO;
+
+import java.util.List;
 
 /**
  * @author: 犬小哈
@@ -13,9 +15,9 @@ import com.quanxiaoha.xiaohashu.count.dto.FindNoteCountByIdRspDTO;
 public interface NoteCountService {
 
     /**
-     * 查询笔记计数数据
-     * @param findNoteCountByIdReqDTO
+     * 批量查询笔记计数
+     * @param findNoteCountsByIdsReqDTO
      * @return
      */
-    Response<FindNoteCountByIdRspDTO> findNoteCountData(FindNoteCountByIdReqDTO findNoteCountByIdReqDTO);
+    Response<List<FindNoteCountsByIdRspDTO>> findNotesCountData(FindNoteCountsByIdsReqDTO findNoteCountsByIdsReqDTO);
 }

@@ -36,16 +36,13 @@
     where user_id = #{userId} and status = 1 order by create_time desc limit #{limit}
   </select>
 
-  <select id="selectTotalCountByUserId" resultType="int">
-    select count(*) from t_note_like
+  <select id="selectByUserIdAndNoteIds" resultMap="BaseResultMap" parameterType="map">
+    select note_id, user_id from t_note_like
     where user_id = #{userId} and status = 1
-  </select>
-
-  <select id="selectPageListByUserId" resultType="long">
-    select note_id from t_note_like
-    where user_id = #{userId} and status = 1
-    order by create_time desc
-    limit #{offset}, #{pageSize}
+      and note_id in
+    <foreach collection="noteIds" item="noteId" open="(" separator="," close=")">
+      #{noteId}
+    </foreach>
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

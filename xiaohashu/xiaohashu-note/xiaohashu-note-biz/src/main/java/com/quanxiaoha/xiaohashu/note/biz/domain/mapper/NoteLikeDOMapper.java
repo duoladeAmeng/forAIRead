@@ -29,11 +29,14 @@ public interface NoteLikeDOMapper {
 
     List<NoteLikeDO> selectLikedByUserIdAndLimit(@Param("userId") Long userId, @Param("limit")  int limit);
 
-    int selectTotalCountByUserId(@Param("userId") Long userId);
-
-    List<Long> selectPageListByUserId(@Param("userId") Long userId,
-                                      @Param("offset") long offset,
-                                      @Param("pageSize") long pageSize);
+    /**
+     * 查询用户，对于一批量笔记的已点赞记录
+     * @param userId
+     * @param noteIds
+     * @return
+     */
+    List<NoteLikeDO> selectByUserIdAndNoteIds(@Param("userId") Long userId,
+                                              @Param("noteIds") List<Long> noteIds);
 
     int updateByPrimaryKeySelective(NoteLikeDO record);
 
@@ -45,5 +48,4 @@ public interface NoteLikeDOMapper {
      * @return
      */
     int update2UnlikeByUserIdAndNoteId(NoteLikeDO noteLikeDO);
-
 }

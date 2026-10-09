@@ -91,7 +91,9 @@ public class CountNoteCommentConsumer implements RocketMQListener<String> {
             }
 
             // 若评论数大于零，则执行更新操作：累加评论总数
-            noteCountDOMapper.insertOrUpdateCommentTotalByNoteId(count, noteId);
+            if (count > 0) {
+                noteCountDOMapper.insertOrUpdateCommentTotalByNoteId(count, noteId);
+            }
         }
     }
 }

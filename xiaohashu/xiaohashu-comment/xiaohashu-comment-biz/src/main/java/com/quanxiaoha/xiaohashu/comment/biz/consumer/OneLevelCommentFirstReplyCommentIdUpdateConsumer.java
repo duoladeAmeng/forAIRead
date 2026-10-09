@@ -11,7 +11,6 @@ import com.quanxiaoha.xiaohashu.comment.biz.domain.dataobject.CommentDO;
 import com.quanxiaoha.xiaohashu.comment.biz.domain.mapper.CommentDOMapper;
 import com.quanxiaoha.xiaohashu.comment.biz.enums.CommentLevelEnum;
 import com.quanxiaoha.xiaohashu.comment.biz.model.dto.CountPublishCommentMqDTO;
-import com.quanxiaoha.xiaohashu.comment.biz.service.CommentService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
@@ -46,8 +45,6 @@ public class OneLevelCommentFirstReplyCommentIdUpdateConsumer implements RocketM
     private CommentDOMapper commentDOMapper;
     @Resource(name = "taskExecutor")
     private ThreadPoolTaskExecutor threadPoolTaskExecutor;
-    @Resource
-    private CommentService commentService;
 
     private BufferTrigger<String> bufferTrigger = BufferTrigger.<String>batchBlocking()
             .bufferSize(50000) // 缓存队列的最大容量
@@ -136,13 +133,8 @@ public class OneLevelCommentFirstReplyCommentIdUpdateConsumer implements RocketM
                     // 更新其一级评论的 first_reply_comment_id
                     commentDOMapper.updateFirstReplyCommentIdByPrimaryKey(earliestCommentId, needUpdateCommentId);
 
-                    // 异步更新缓存
-                    threadPoolTaskExecutor.submit(() -> {
-                        // 删除本地缓存
-                        commentService.deleteCommentLocalCache(needUpdateCommentId);
-                        // 更新 Redis 缓存
-                        sync2Redis(Lists.newArrayList(needUpdateCommentId));
-                    });
+                    // 异步同步到 Redis
+                    threadPoolTaskExecutor.submit(() -> sync2Redis(Lists.newArrayList(needUpdateCommentId)));
                 }
             });
         }
@@ -160,10 +152,6 @@ public class OneLevelCommentFirstReplyCommentIdUpdateConsumer implements RocketM
         // 使用 RedisTemplate 的管道模式，允许在一个操作中批量发送多个命令，防止频繁操作 Redis
         redisTemplate.executePipelined((RedisCallback<?>) (connection) -> {
             needSyncCommentIds.forEach(needSyncCommentId -> {
-                // TODO: 更新一级评论详情中的最早回复评论数据（暂时使用粗暴简单的方案 —— 删除缓存）
-                String commentDetailKey = RedisKeyConstants.buildCommentDetailKey(needSyncCommentId);
-                redisTemplate.delete(commentDetailKey);
-
                 // 构建 Redis Key
                 String key = RedisKeyConstants.buildHaveFirstReplyCommentKey(needSyncCommentId);
 

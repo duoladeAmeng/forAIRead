@@ -1,10 +1,8 @@
 package com.quanxiaoha.xiaohashu.count.biz.service;
 
 import com.quanxiaoha.framework.common.response.Response;
-import com.quanxiaoha.xiaohashu.count.dto.FindNoteCountByIdReqDTO;
-import com.quanxiaoha.xiaohashu.count.dto.FindNoteCountByIdRspDTO;
-import com.quanxiaoha.xiaohashu.count.dto.FindUserCountByIdReqDTO;
-import com.quanxiaoha.xiaohashu.count.dto.FindUserCountByIdRspDTO;
+import com.quanxiaoha.xiaohashu.count.dto.FindUserCountsByIdReqDTO;
+import com.quanxiaoha.xiaohashu.count.dto.FindUserCountsByIdRspDTO;
 
 /**
  * @author: 犬小哈
@@ -14,5 +12,10 @@ import com.quanxiaoha.xiaohashu.count.dto.FindUserCountByIdRspDTO;
  **/
 public interface UserCountService {
 
-    Response<FindUserCountByIdRspDTO> findUserCountData(FindUserCountByIdReqDTO findUserCountByIdReqDTO);
+    /**
+     * 查询用户相关计数
+     * @param findUserCountsByIdReqDTO
+     * @return
+     */
+    Response<FindUserCountsByIdRspDTO> findUserCountData(FindUserCountsByIdReqDTO findUserCountsByIdReqDTO);
 }

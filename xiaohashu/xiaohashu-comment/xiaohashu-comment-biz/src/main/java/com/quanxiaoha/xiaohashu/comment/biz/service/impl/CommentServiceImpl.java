@@ -135,8 +135,7 @@ public class CommentServiceImpl implements CommentService {
 
         sendMqRetryHelper.asyncSend(MQConstants.TOPIC_PUBLISH_COMMENT, JsonUtils.toJsonString(publishCommentMqDTO));
 
-        // 将评论 ID 返给前端
-        return Response.success(commentId);
+        return Response.success();
     }
 
     /**
@@ -152,7 +151,7 @@ public class CommentServiceImpl implements CommentService {
         // 当前页码
         Integer pageNo = findCommentPageListReqVO.getPageNo();
         // 每页展示一级评论数
-        long pageSize = 7;
+        long pageSize = 10;
 
         // 构建评论总数 Redis Key
         String noteCommentTotalKey = RedisKeyConstants.buildNoteCommentTotalKey(noteId);
@@ -166,17 +165,15 @@ public class CommentServiceImpl implements CommentService {
             // 查询评论总数 (从 t_note_count 笔记计数表查，提升查询性能, 避免 count(*))
             Long dbCount = noteCountDOMapper.selectCommentTotalByNoteId(noteId);
 
-            // 若数据库中也不存在，可能计数表中的记录还未初始化
-            // if (Objects.isNull(dbCount)) {
-            //     throw new BizException(ResponseCodeEnum.COMMENT_NOT_FOUND);
-            // }
+            // 若数据库中也不存在，则抛出业务异常
+            if (Objects.isNull(dbCount)) {
+                throw new BizException(ResponseCodeEnum.COMMENT_NOT_FOUND);
+            }
 
-            count = Objects.isNull(dbCount) ? 0L : dbCount;
-            // count = dbCount;
+            count = dbCount;
             // 异步将评论总数同步到 Redis 中
-            long finalCount = count;
             threadPoolTaskExecutor.execute(() ->
-                syncNoteCommentTotal2Redis(noteCommentTotalKey, finalCount)
+                syncNoteCommentTotal2Redis(noteCommentTotalKey, dbCount)
             );
         }
 
@@ -1172,10 +1169,9 @@ public class CommentServiceImpl implements CommentService {
         commentRspVOS.forEach(commentRspVO -> {
             Long oneLevelCommentId = commentRspVO.getCommentId();
             notExpiredCommentIds.add(oneLevelCommentId);
-            List<FindCommentItemRspVO> childComments = commentRspVO.getChildComments();
-            if (CollUtil.isNotEmpty(childComments)) {
-                childComments.forEach(childCommentRspVO ->
-                        notExpiredCommentIds.add(childCommentRspVO.getCommentId()));
+            FindCommentItemRspVO firstCommentVO = commentRspVO.getFirstReplyComment();
+            if (Objects.nonNull(firstCommentVO)) {
+                notExpiredCommentIds.add(firstCommentVO.getCommentId());
             }
         });
 
@@ -1196,23 +1192,20 @@ public class CommentServiceImpl implements CommentService {
             // 设置一级评论的子评论总数、点赞数
             Map<Object, Object> hash = commentIdAndCountMap.get(commentId);
             if (CollUtil.isNotEmpty(hash)) {
-                Object childCommentTotalObj = hash.get(RedisKeyConstants.FIELD_CHILD_COMMENT_TOTAL);
-                Long childCommentTotal = Objects.isNull(childCommentTotalObj) ? 0 : Long.parseLong(childCommentTotalObj.toString());
-                Object likeTotalObj = hash.get(RedisKeyConstants.FIELD_LIKE_TOTAL);
-                Long likeTotal = Objects.isNull(likeTotalObj) ? 0 : Long.parseLong(likeTotalObj.toString());
+                Object likeTotalObj = hash.get(RedisKeyConstants.FIELD_CHILD_COMMENT_TOTAL);
+                Long childCommentTotal = Objects.isNull(likeTotalObj) ? 0 : Long.parseLong(likeTotalObj.toString());
+                Long likeTotal = Long.valueOf(hash.get(RedisKeyConstants.FIELD_LIKE_TOTAL).toString());
                 commentRspVO.setChildCommentTotal(childCommentTotal);
                 commentRspVO.setLikeTotal(likeTotal);
                 // 最初回复的二级评论
-                List<FindCommentItemRspVO> childComments = commentRspVO.getChildComments();
-                if (CollUtil.isNotEmpty(childComments)) {
-                    childComments.forEach(childCommentRspVO -> {
-                        Long firstCommentId = childCommentRspVO.getCommentId();
-                        Map<Object, Object> firstCommentHash = commentIdAndCountMap.get(firstCommentId);
-                        if (CollUtil.isNotEmpty(firstCommentHash)) {
-                            Long firstCommentLikeTotal = Long.valueOf(firstCommentHash.get(RedisKeyConstants.FIELD_LIKE_TOTAL).toString());
-                            childCommentRspVO.setLikeTotal(firstCommentLikeTotal);
-                        }
-                    });
+                FindCommentItemRspVO firstCommentVO = commentRspVO.getFirstReplyComment();
+                if (Objects.nonNull(firstCommentVO)) {
+                    Long firstCommentId = firstCommentVO.getCommentId();
+                    Map<Object, Object> firstCommentHash = commentIdAndCountMap.get(firstCommentId);
+                    if (CollUtil.isNotEmpty(firstCommentHash)) {
+                        Long firstCommentLikeTotal = Long.valueOf(firstCommentHash.get(RedisKeyConstants.FIELD_LIKE_TOTAL).toString());
+                        firstCommentVO.setLikeTotal(firstCommentLikeTotal);
+                    }
                 }
             }
         }
@@ -1347,8 +1340,8 @@ public class CommentServiceImpl implements CommentService {
 
                     setUserInfo(commentIdAndDOMap, userIdAndDTOMap, firstReplyCommentUserId, firstReplyCommentRspVO);
 
-                    // 子评论（需要带上最早回复的那条评论）
-                    oneLevelCommentRspVO.setChildComments(Collections.singletonList(firstReplyCommentRspVO));
+                    // 用户信息
+                    oneLevelCommentRspVO.setFirstReplyComment(firstReplyCommentRspVO);
                     // 笔记内容
                     setCommentContent(commentUuidAndContentMap, firstReplyCommentDO, firstReplyCommentRspVO);
                 }

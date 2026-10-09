@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigInteger;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -32,10 +31,9 @@ public class FindNoteDetailRspVO {
 
     private List<String> imgUris;
 
-    /**
-     * 话题集合
-     */
-    List<FindTopicRspVO> topics;
+    private Long topicId;
+
+    private String topicName;
 
     private Long creatorId;
 
@@ -48,7 +46,7 @@ public class FindNoteDetailRspVO {
     /**
      * 编辑时间
      */
-    private String updateTime;
+    private LocalDateTime updateTime;
 
     /**
      * 是否可见
@@ -56,18 +54,13 @@ public class FindNoteDetailRspVO {
     private Integer visible;
 
     /**
-     * 被点赞数
+     * 当前登录用户是否点赞了
      */
-    private String likeTotal;
+    private Integer isLiked;
 
     /**
-     * 被收藏数
+     * 当前登录用户是否收藏了
      */
-    private String collectTotal;
-
-    /**
-     * 被评论数
-     */
-    private String commentTotal;
+    private Integer isCollected;
 
 }

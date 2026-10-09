@@ -2,10 +2,8 @@ package com.quanxiaoha.xiaohashu.user.biz.rpc;
 
 import com.quanxiaoha.framework.common.response.Response;
 import com.quanxiaoha.xiaohashu.count.api.CountFeignApi;
-import com.quanxiaoha.xiaohashu.count.dto.FindNoteCountByIdReqDTO;
-import com.quanxiaoha.xiaohashu.count.dto.FindNoteCountByIdRspDTO;
-import com.quanxiaoha.xiaohashu.count.dto.FindUserCountByIdReqDTO;
-import com.quanxiaoha.xiaohashu.count.dto.FindUserCountByIdRspDTO;
+import com.quanxiaoha.xiaohashu.count.dto.FindUserCountsByIdReqDTO;
+import com.quanxiaoha.xiaohashu.count.dto.FindUserCountsByIdRspDTO;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
@@ -28,11 +26,11 @@ public class CountRpcService {
      * @param userId
      * @return
      */
-    public FindUserCountByIdRspDTO findUserCountById(Long userId) {
-        FindUserCountByIdReqDTO findUserCountByIdReqDTO = new FindUserCountByIdReqDTO();
-        findUserCountByIdReqDTO.setUserId(userId);
+    public FindUserCountsByIdRspDTO findUserCountById(Long userId) {
+        FindUserCountsByIdReqDTO findUserCountsByIdReqDTO = new FindUserCountsByIdReqDTO();
+        findUserCountsByIdReqDTO.setUserId(userId);
 
-        Response<FindUserCountByIdRspDTO> response = countFeignApi.findUserCount(findUserCountByIdReqDTO);
+        Response<FindUserCountsByIdRspDTO> response = countFeignApi.findUserCount(findUserCountsByIdReqDTO);
 
         if (Objects.isNull(response) || !response.isSuccess()) {
             return null;

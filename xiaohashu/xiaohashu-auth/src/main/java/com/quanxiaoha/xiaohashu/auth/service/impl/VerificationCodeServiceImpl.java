@@ -64,7 +64,7 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
             String signName = "阿里云短信测试";
             String templateCode = "SMS_154950909";
             String templateParam = String.format("{\"code\":\"%s\"}", verificationCode);
-            // aliyunSmsHelper.sendMessage(signName, templateCode, phone, templateParam);
+            aliyunSmsHelper.sendMessage(signName, templateCode, phone, templateParam);
         });
 
         // 存储验证码到 redis, 并设置过期时间为 3 分钟

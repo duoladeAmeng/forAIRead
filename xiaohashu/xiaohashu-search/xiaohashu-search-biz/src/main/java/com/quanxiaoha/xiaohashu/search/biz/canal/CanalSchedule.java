@@ -134,8 +134,6 @@ public class CanalSchedule implements Runnable {
      * @param eventType
      */
     private void handleNoteEvent(Map<String, Object> columnMap, CanalEntry.EventType eventType) throws Exception {
-        if (Objects.equals(eventType, CanalEntry.EventType.DELETE)) return;
-
         // 获取笔记 ID
         Long noteId = Long.parseLong(columnMap.get("id").toString());
 
@@ -169,8 +167,6 @@ public class CanalSchedule implements Runnable {
      * @param eventType
      */
     private void handleUserEvent(Map<String, Object> columnMap, CanalEntry.EventType eventType) throws Exception {
-        if (Objects.equals(eventType, CanalEntry.EventType.DELETE)) return;
-
         // 获取用户 ID
         Long userId = Long.parseLong(columnMap.get("id").toString());
 

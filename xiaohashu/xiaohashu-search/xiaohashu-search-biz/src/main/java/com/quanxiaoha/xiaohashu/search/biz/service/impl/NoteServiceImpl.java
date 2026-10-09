@@ -279,13 +279,10 @@ public class NoteServiceImpl implements NoteService {
 
                 // 提取特定字段值
                 Long noteId = (Long) sourceAsMap.get(NoteIndex.FIELD_NOTE_ID);
-                Integer noteType = (Integer) sourceAsMap.get(NoteIndex.FIELD_TYPE);
                 String cover = (String) sourceAsMap.get(NoteIndex.FIELD_NOTE_COVER);
-                String videoUri = (String) sourceAsMap.get(NoteIndex.FIELD_NOTE_VIDEO_URI);
                 String title = (String) sourceAsMap.get(NoteIndex.FIELD_NOTE_TITLE);
-                Number creatorId = (Number) sourceAsMap.get(NoteIndex.FIELD_NOTE_CREATOR_ID);
-                String avatar = (String) sourceAsMap.get(NoteIndex.FIELD_NOTE_CREATOR_AVATAR);
-                String nickname = (String) sourceAsMap.get(NoteIndex.FIELD_NOTE_CREATOR_NICKNAME);
+                String avatar = (String) sourceAsMap.get(NoteIndex.FIELD_NOTE_AVATAR);
+                String nickname = (String) sourceAsMap.get(NoteIndex.FIELD_NOTE_NICKNAME);
                 // 获取更新时间
                 String updateTimeStr = (String) sourceAsMap.get(NoteIndex.FIELD_NOTE_UPDATE_TIME);
                 LocalDateTime updateTime = LocalDateTime.parse(updateTimeStr, DateConstants.DATE_FORMAT_Y_M_D_H_M_S);
@@ -302,11 +299,8 @@ public class NoteServiceImpl implements NoteService {
 
                 // 构建 VO 实体类
                 SearchNoteRspVO searchNoteRspVO = SearchNoteRspVO.builder()
-                        .id(String.valueOf(noteId))
-                        .type(noteType)
-                        .creatorId(creatorId.longValue())
+                        .noteId(noteId)
                         .cover(cover)
-                        .videoUri(videoUri)
                         .title(title)
                         .highlightTitle(highlightedTitle)
                         .avatar(avatar)

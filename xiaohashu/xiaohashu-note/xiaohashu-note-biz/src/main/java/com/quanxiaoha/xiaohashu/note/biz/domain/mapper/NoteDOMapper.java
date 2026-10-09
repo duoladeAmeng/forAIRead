@@ -23,19 +23,15 @@ public interface NoteDOMapper {
      */
     Long selectCreatorIdByNoteId(Long noteId);
 
-    int selectTotalCount(Long channelId);
+    /**
+     * 查询个人主页已发布笔记列表
+     * @param creatorId
+     * @param cursor
+     * @return
+     */
+    List<NoteDO> selectPublishedNoteListByUserIdAndCursor(@Param("creatorId") Long creatorId,
+                                                          @Param("cursor") Long cursor);
 
-    List<NoteDO> selectPageList(@Param("channelId") Long channelId,
-                                @Param("offset") long offset,
-                                @Param("pageSize") long pageSize);
-
-    int selectTotalCountByCreatorId(Long creatorId);
-
-    List<NoteDO> selectPageListByCreatorId(@Param("creatorId") Long creatorId,
-                                           @Param("offset") long offset,
-                                           @Param("pageSize") long pageSize);
-
-    List<NoteDO> selectByNoteIds(@Param("noteIds") List<Long> noteIds);
 
     int updateByPrimaryKeySelective(NoteDO record);
 

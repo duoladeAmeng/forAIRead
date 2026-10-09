@@ -20,16 +20,12 @@ public class SearchNoteRspVO {
     /**
      * 笔记ID
      */
-    private String id;
-
-    private Integer type;
+    private Long noteId;
 
     /**
      * 封面
      */
     private String cover;
-
-    private String videoUri;
 
     /**
      * 标题
@@ -50,8 +46,6 @@ public class SearchNoteRspVO {
      * 发布者昵称
      */
     private String nickname;
-
-    private Long creatorId;
 
     /**
      * 最后一次编辑时间

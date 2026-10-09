@@ -17,12 +17,10 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="status" jdbcType="TINYINT" property="status" />
     <result column="content_uuid" jdbcType="VARCHAR" property="contentUuid" />
-    <result column="channel_id" jdbcType="BIGINT" property="channelId" />
-    <result column="topic_ids" jdbcType="VARCHAR" property="topicIds" />
   </resultMap>
   <sql id="Base_Column_List">
     id, title, is_content_empty, creator_id, topic_id, topic_name, is_top, `type`, img_uris, 
-    video_uri, visible, create_time, update_time, `status`, content_uuid, channel_id, topic_ids
+    video_uri, visible, create_time, update_time, `status`, content_uuid
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -39,48 +37,14 @@
     select creator_id from t_note where id = #{noteId} and status = 1
   </select>
 
-  <select id="selectTotalCount" resultType="int">
-    select count(*) from t_note where visible = 0 and status = 1
-    <if test="channelId != null and channelId != 0">
-      and channel_id = #{channelId}
+  <select id="selectPublishedNoteListByUserIdAndCursor" resultMap="BaseResultMap">
+    select id, title, creator_id, is_top, type, img_uris, video_uri from t_note
+    where creator_id = #{creatorId} and visible = 0 and status = 1
+    <if test="cursor != null">
+      <![CDATA[ and id < #{cursor} ]]>
     </if>
-    order by create_time desc
-  </select>
-
-  <select id="selectTotalCountByCreatorId" resultType="int">
-    select count(*) from t_note
-    where visible = 0 and status = 1 and creator_id = #{creatorId}
-    order by create_time desc
-  </select>
-
-  <select id="selectPageList" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from t_note where visible = 0 and status = 1
-    <if test="channelId != null and channelId != 0">
-      and channel_id = #{channelId}
-    </if>
-    order by create_time desc
-    limit #{offset}, #{pageSize}
-  </select>
-
-  <select id="selectPageListByCreatorId" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from t_note where visible = 0 and status = 1
-    and creator_id = #{creatorId}
-    order by create_time desc
-    limit #{offset}, #{pageSize}
-  </select>
-
-  <select id="selectByNoteIds" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from t_note
-    where id in
-    <foreach collection="noteIds" item="noteId" open="(" separator="," close=")">
-      #{noteId}
-    </foreach>
+    order by id desc
+    limit 20
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
@@ -92,13 +56,12 @@
       creator_id, topic_id, topic_name, 
       is_top, `type`, img_uris, video_uri, 
       visible, create_time, update_time, 
-      `status`, content_uuid, channel_id, topic_ids)
+      `status`, content_uuid)
     values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{isContentEmpty,jdbcType=BIT}, 
       #{creatorId,jdbcType=BIGINT}, #{topicId,jdbcType=BIGINT}, #{topicName,jdbcType=VARCHAR}, 
       #{isTop,jdbcType=BIT}, #{type,jdbcType=TINYINT}, #{imgUris,jdbcType=VARCHAR}, #{videoUri,jdbcType=VARCHAR}, 
       #{visible,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{status,jdbcType=TINYINT}, #{contentUuid,jdbcType=VARCHAR}, #{channelId}, #{topicIds}
-           )
+      #{status,jdbcType=TINYINT}, #{contentUuid,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.quanxiaoha.xiaohashu.note.biz.domain.dataobject.NoteDO">
     insert into t_note

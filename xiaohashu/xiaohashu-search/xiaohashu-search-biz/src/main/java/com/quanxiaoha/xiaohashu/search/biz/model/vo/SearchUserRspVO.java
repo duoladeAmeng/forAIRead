@@ -52,6 +52,4 @@ public class SearchUserRspVO {
      */
     private String fansTotal;
 
-    private Boolean isLiked;
-
 }
